@@ -8,6 +8,7 @@ import Footer from './components/Footer'
 import Home from './components/Home'
 import Cart from './components/Cart'
 import type { Train } from './types/train'
+import Trains from './components/Trains'
 
 function App() {
   const [activePage, setActivePage] = useState('Home')
@@ -32,12 +33,12 @@ function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#111126] text-white">
-      <Navbar activePage={activePage} onPageChange={setActivePage}  cartCount={cart.length}/>
+      <Navbar activePage={activePage} onPageChange={setActivePage} cartCount={cart.length} />
       {activePage === 'Home' && (
         <Home onAddToCart={handleAddToCart} />
       )}
 
-      {activePage === 'Trains' && <p>Trains page coming soon...</p>}
+      {activePage === 'Trains' && <Trains />}
 
       {activePage === 'Cart' && (
         <Cart cart={cart} onIncrease={handleIncrease} onDecrease={handleDecrease} />
