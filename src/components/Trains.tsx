@@ -1,10 +1,13 @@
 
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { ApiTrain, Coach, Station } from '../types/apiTypes'
 
 const API_URL = 'https://trainsapi.stepacademy.ge/api'
 
 function Trains() {
+    const navigate = useNavigate()
+
     const [trains, setTrains] = useState<ApiTrain[]>([])
     const [isLoading, setIsLoading] = useState(true)
     const [error, setError] = useState<string | null>(null)
@@ -267,6 +270,7 @@ function Trains() {
                     <label className="mb-2 block text-sm text-slate-300">
                         Train number
                     </label>
+
                     <button
                         onClick={() => searchInputRef.current?.focus()}
                         className="mb-3 w-full rounded-lg border border-slate-600 px-4 py-2 text-sm text-white transition hover:bg-slate-700"
@@ -423,6 +427,13 @@ function Trains() {
                                             {selectedTrainId === train.id
                                                 ? 'Hide Coaches'
                                                 : 'View Coaches'}
+                                        </button>
+
+                                        <button
+                                            onClick={() => navigate(`/trains/${train.id}`)}
+                                            className="mt-3 w-full rounded-lg border border-yellow-500 px-3 py-3 text-sm font-semibold text-yellow-500 transition hover:bg-yellow-500 hover:text-black"
+                                        >
+                                            Train Details
                                         </button>
 
                                         {selectedTrainId === train.id && (

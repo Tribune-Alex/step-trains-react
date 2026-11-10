@@ -1,18 +1,20 @@
+
 import { useState } from 'react'
-// import heroImg from './assets/hero.png'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
+import { Routes, Route } from 'react-router-dom'
+
 import './App.css'
+
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './components/Home'
 import Cart from './components/Cart'
-import type { Train } from './types/train'
 import Trains from './components/Trains'
+import TrainDetails from './components/TrainDetails'
+import type { Train } from './types/train'
 
 function App() {
-  const [activePage, setActivePage] = useState('Home')
   const [cart, setCart] = useState<Train[]>([])
+
   const handleAddToCart = (train: Train) => {
     setCart((prevCart) => [...prevCart, train])
   }
@@ -33,20 +35,43 @@ function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-[#111126] text-white">
-      <Navbar activePage={activePage} onPageChange={setActivePage} cartCount={cart.length} />
-      {activePage === 'Home' && (
-        <Home onAddToCart={handleAddToCart} />
-      )}
 
-      {activePage === 'Trains' && <Trains />}
+      <Navbar cartCount={cart.length} />
 
-      {activePage === 'Cart' && (
-        <Cart cart={cart} onIncrease={handleIncrease} onDecrease={handleDecrease} />
-      )}
+      <main className="flex-1">
+        <Routes>
+          <Route
+            path="/"
+            element={<Home onAddToCart={handleAddToCart} />}
+          />
+
+          <Route
+            path="/trains"
+            element={<Trains />}
+          />
+
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cart={cart}
+                onIncrease={handleIncrease}
+                onDecrease={handleDecrease}
+              />
+            }
+          />
+
+          <Route
+            path="/trains/:id"
+            element={<TrainDetails />}
+          />
+        </Routes>
+      </main>
+
       <Footer />
+
     </div>
   )
 }
 
 export default App
-
